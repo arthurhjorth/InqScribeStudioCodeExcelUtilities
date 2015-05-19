@@ -1,13 +1,17 @@
 import csv
 import nltk
 import re
+import sys  
 
+reload(sys)  
+sys.setdefaultencoding('utf8') #i don't know why i need this, but I do
 
-the_lambda  = lambda x: 'income' in words_inside_chunk(x)
+# the_lambda  = lambda x: 'income' in words_inside_chunk(x)
 
 
 def words_inside_chunk(achunk):
-	return nltk.word_tokenize("".join(map (lambda y: y['spoken'], achunk)).lower())
+	the_spoken = "".join(map (lambda y: y['spoken'], achunk)).lower()
+	return nltk.word_tokenize(the_spoken)
 
 
 # optional filtering lambda on words
@@ -25,6 +29,7 @@ def chunk(the_input_file, duration_in_seconds, the_lambda = lambda x: True):
 	reader = csv.DictReader(infile)
 	for line in reader:
 		a_chunk.append(line)
+		print line['start']
 		if float(line['start']) > counter * duration_in_seconds:
 			all_chunks.append(a_chunk)
 			a_chunk = []
@@ -33,4 +38,3 @@ def chunk(the_input_file, duration_in_seconds, the_lambda = lambda x: True):
 
 	return filter(the_lambda, all_chunks)
 
-print chunk('/Users/hah661/Documents/Northwestern/MyPHD/social_policy_course/SocPol_Video/transcript_txts/F2014_3.txtout.csv', 120, the_lambda)
