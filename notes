@@ -1,0 +1,18 @@
+# main app here. Everything is passed around as lists and dictionaries.
+# the main idea is that we have an original text in a list of dictionaries. A Text
+# consists of dictionaries, and each of these dictionaries have
+## speaker
+## spoken
+## start_time
+## end_time
+## tags
+
+# there are different ways that we can imagine people would want to chunk their original
+# text. One would be to chunk the individual utterances (dict['spoken']), another would
+# be to chunk the entire body of text (flatten the content of dictionaries, then chunk, 
+# but taking into account time stamps in the dicts)
+
+# We need a chunker. A chunker takes a Text, and changes its 'working copy' 
+
+# modules can add TAGS to utterances
+# cleaners can CHANGE the content of utterances
