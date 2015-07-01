@@ -6,6 +6,8 @@ from CentroidClusterModule import CentroidClusterModule
 import nltk
 import csv
 import Minute_chunker 
+import FileImporter
+import TagHandler
 
 
 the_dir = '/Users/hah661/Documents/Northwestern/MyPHD/social_policy_course/SocPol_Video/transcript_txts/'
@@ -21,15 +23,20 @@ files = [
 'W2014_4.txtout.csv'
 ]
 
-all_chunked = {}
+all_spoken = []
 for filename in files:
-	reader = csv.DictReader(open(the_dir+filename, 'rU'))
-	data = [thing for thing in reader]
-	all_chunked[filename] = Minute_chunker.chunk(data)
+	 all_spoken = all_spoken + FileImporter.import_file(the_dir+filename)
+
+chunk_tags = Minute_chunker.chunk(all_spoken)
+
+all_spoken = TagHandler.apply_tags(all_spoken, chunk_tags, "minute_chunk")
+
+all_spoken = TagHandler.remove_tag(all_spoken, "minute_chunk")
 
 
-print all_chunked
 
-# print chunked_data
+
 x = CentroidClusterModule()
+
+
 
